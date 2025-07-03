@@ -16,9 +16,14 @@ class UserController extends Controller
 
     return back()->with('success', 'User berhasil disetujui.');
 }
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
+        $users = User::query()
+            ->when($request->search, function ($query) use ($request) {
+                $query->where('name', 'LIKE', "%{$request->search}%")
+                    ->orWhere('email', 'LIKE', "%{$request->search}%");
+            })->latest()->paginate(1);
+
         return view('users.index', compact('users'));
     }
 
@@ -32,7 +37,7 @@ class UserController extends Controller
         $request->validate([
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|unique:users',
-            'password' => 'required|string|min:4',
+            'password' => 'required|string|min:6',
             'role'     => 'required|in:admin,hrd,manager',
         ]);
 

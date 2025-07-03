@@ -10,6 +10,9 @@
         <a href="{{ route('users.create') }}" class="btn btn-primary rounded-pill px-4 shadow-sm">
             <i class="fas fa-plus me-1"></i> Tambah User
         </a>
+        <form method="GET" action="?">
+            <input type="text" class="form-control" id="search" name="search" value="{{ request()->search }}">
+        </form>
     </div>
 
     <div class="card border-0 shadow rounded-4">
@@ -72,6 +75,9 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-4">
+            {{ $users->links() }}
         </div>
     </div>
 </div>
