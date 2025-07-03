@@ -24,6 +24,7 @@ class Karyawan extends Model
         'alamat',
         'id_jabatan',
         'id_departemen',
+        'user_id',
     ];
 
     public function jabatan()
@@ -35,4 +36,17 @@ class Karyawan extends Model
     {
         return $this->belongsTo(Departemen::class, 'id_departemen');
     }
+
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
 }

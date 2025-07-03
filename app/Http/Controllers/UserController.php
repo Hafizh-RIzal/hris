@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function approve($id)
+{
+    $user = User::findOrFail($id);
+    $user->is_approved = true;
+    $user->save();
+
+    return back()->with('success', 'User berhasil disetujui.');
+}
     public function index()
     {
         $users = User::latest()->get();

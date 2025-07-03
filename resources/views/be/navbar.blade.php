@@ -1,28 +1,37 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-    <a class="navbar-brand" href="#">Sistem Panel</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top px-3">
+    <div class="container-fluid">
 
-    <div class="collapse navbar-collapse" id="topNavbar">
-        <ul class="navbar-nav ms-auto align-items-center">
+        {{-- Sidebar toggle button (only on mobile) --}}
+        <button class="btn btn-dark d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+            <i class="fas fa-bars"></i>
+        </button>
 
+        {{-- Brand / Logo --}}
+        <a class="navbar-brand fw-bold" href="{{ route('dashboard.index') }}">
+            <i class="fas fa-cogs me-2"></i> HRIS Panel
+        </a>
+
+        {{-- Collapse toggler for right side --}}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        {{-- Right menu --}}
+        <div class="collapse navbar-collapse justify-content-end" id="topNavbar">
             @auth
-            <li class="nav-item d-flex align-items-center text-white px-2">
-                <i class="fas fa-user-circle me-2"></i>
-                {{ auth()->user()->name }} ({{ auth()->user()->role }})
-            </li>
+            <ul class="navbar-nav align-items-center gap-3">
 
-            <li class="nav-item">
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="nav-link btn btn-link text-danger" style="text-decoration: none;">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </form>
-            </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-light d-flex align-items-center gap-2">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
             @endauth
-
-        </ul>
+        </div>
     </div>
 </nav>

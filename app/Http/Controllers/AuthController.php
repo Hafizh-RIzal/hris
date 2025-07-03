@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -12,29 +13,48 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Proses login
-   public function login(Request $request)
+    public function login(Request $request)
 {
     $credentials = $request->validate([
         'email'    => ['required', 'email'],
         'password' => ['required'],
     ]);
 
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user) {
+        return back()->withErrors([
+            'email' => 'Akun tidak ditemukan. Mungkin sudah dihapus.',
+        ])->onlyInput('email');
+    }
+
     if (Auth::attempt($credentials, $request->remember)) {
         $request->session()->regenerate();
+        $user = Auth::user();
 
-        $role = Auth::user()->role;
-
-        if ($role === 'admin') {
-            return redirect('/dashboard');
-        } elseif ($role === 'hrd') {
-            return redirect('/dashboard');
-        } elseif ($role === 'manager') {
-            return redirect('/dashboard');
-        } else {
+        if (!$user->is_approved) {
             Auth::logout();
-            return redirect('/login')->withErrors(['email' => 'Role tidak dikenali.']);
+            return back()->withErrors([
+                'email' => 'Akun Anda belum disetujui oleh admin.',
+            ])->onlyInput('email');
         }
+
+        switch ($user->role) {
+    case 'admin':
+    case 'hrd':
+    case 'manager':
+        return redirect()->route('dashboard.index');
+
+    case 'karyawan':
+        return redirect()->route('absensi.presensi');
+
+    default:
+        Auth::logout();
+        return redirect('/login')->withErrors([
+            'email' => 'Role tidak dikenali.',
+        ]);
+}
+
     }
 
     return back()->withErrors([

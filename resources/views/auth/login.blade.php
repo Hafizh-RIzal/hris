@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login Admin</title>
+  <title>Login HR</title>
 
   <!-- Bootstrap, Font Awesome, Animate -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,12 +46,16 @@
     .alert {
       font-size: 0.9rem;
     }
+
+    .register-link {
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
 
   <div class="login-box animate__animated animate__fadeInDown">
-    <h4 class="mb-4 text-center">Login Admin</h4>
+    <h4 class="mb-4 text-center">Login HR</h4>
 
     @if ($errors->any())
       <div class="alert alert-danger">
@@ -63,7 +67,7 @@
       @csrf
 
       <div class="mb-3">
-        <label for="email" class="form-label">Email / Username</label>
+        <label for="email" class="form-label">Email</label>
         <input type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
       </div>
 
@@ -81,6 +85,11 @@
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-sign-in-alt me-2"></i>Masuk
         </button>
+      </div>
+
+      <div class="mt-3 text-center register-link">
+        Belum punya akun? 
+        <a href="{{ route('register') }}" class="text-decoration-none text-primary">Daftar di sini</a>
       </div>
     </form>
   </div>
