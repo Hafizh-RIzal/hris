@@ -27,12 +27,22 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold"><i class="fas fa-user me-1"></i>Nama</label>
-                            <input type="text" name="name" class="form-control rounded-3 shadow-sm" value="{{ old('name') }}" required>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror rounded-3 shadow-sm" value="{{ old('name') }}" required>
+                            @error('name')
+                                <div class="invalid-feedback">
+                                {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold"><i class="fas fa-envelope me-1"></i>Email</label>
-                            <input type="email" name="email" class="form-control rounded-3 shadow-sm" value="{{ old('email') }}" required>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror rounded-3 shadow-sm" value="{{ old('email') }}" required>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">

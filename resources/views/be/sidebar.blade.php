@@ -53,13 +53,8 @@
 
         @if ($user->role === 'karyawan')
         <li>
-            <a href="{{ route('absensi.karyawan-form') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.karyawan-form') ? 'active' : 'text-white' }}">
+            <a href="{{ route('absensi.presensi') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.presensi') ? 'active' : 'text-white' }}">
                 <i class="fas fa-fingerprint"></i> Absen Masuk
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('absensi.riwayat') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.riwayat') ? 'active' : 'text-white' }}">
-                <i class="fas fa-history"></i> Riwayat Absen
             </a>
         </li>
         @endif
