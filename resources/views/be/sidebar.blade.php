@@ -14,11 +14,13 @@
 
     {{-- Navigation --}}
     <ul class="nav nav-pills flex-column mb-auto gap-2">
+        @if ($user->role !== 'karyawan')
         <li class="nav-item">
             <a href="{{ route('dashboard.index') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('dashboard.*') ? 'active' : 'text-white' }}">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
         </li>
+        @endif
 
         @if ($user->role === 'admin')
         <li>
@@ -41,28 +43,30 @@
         </li>
         @endif
 
+        @if ($user->role !== 'karyawan')
         <li>
             <a href="{{ route('karyawan.index') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('karyawan.*') ? 'active' : 'text-white' }}">
                 <i class="fas fa-user-tie"></i> Data Karyawan
             </a>
         </li>
+        @endif
 
-        {{-- @if ($user->role === 'karyawan')
+        @if ($user->role === 'karyawan')
         <li>
-            <a href="{{ route('absensi.karyawan-form') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absen.create') ? 'active' : 'text-white' }}">
+            <a href="{{ route('absensi.karyawan-form') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.karyawan-form') ? 'active' : 'text-white' }}">
                 <i class="fas fa-fingerprint"></i> Absen Masuk
             </a>
         </li>
         <li>
-            <a href="{{ route('absensi.riwayat') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absen.riwayat') ? 'active' : 'text-white' }}">
+            <a href="{{ route('absensi.riwayat') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.riwayat') ? 'active' : 'text-white' }}">
                 <i class="fas fa-history"></i> Riwayat Absen
             </a>
         </li>
-        @endif --}}
+        @endif
 
         @if ($user->role === 'hrd')
         <li>
-            <a href="{{ route('absensi.index') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absen.index') ? 'active' : 'text-white' }}">
+            <a href="{{ route('absensi.index') }}" class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('absensi.index') ? 'active' : 'text-white' }}">
                 <i class="fas fa-calendar-check"></i> Rekap Absensi
             </a>
         </li>

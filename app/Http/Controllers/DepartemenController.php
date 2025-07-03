@@ -48,9 +48,16 @@ class DepartemenController extends Controller
         return redirect()->route('departemen.index')->with('success', 'Departemen berhasil diperbarui.');
     }
 
-    public function destroy(Departemen $departemen)
-    {
-        $departemen->delete();
-        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil dihapus.');
+public function destroy(Departemen $departemen)
+{
+    $departemen->loadCount('karyawan'); 
+
+    if ($departemen->karyawan_count > 0) { 
+        return redirect()->back()->with('error', 'Departemen tidak bisa dihapus karena masih digunakan oleh karyawan.');
     }
+
+    $departemen->delete();
+    return redirect()->route('departemen.index')->with('success', 'Departemen berhasil dihapus.');
+}
+
 }

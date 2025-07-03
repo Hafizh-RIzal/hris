@@ -50,9 +50,16 @@ return view('jabatan.index', compact('jabatan'));
         return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil diperbarui.');
     }
 
-    public function destroy(Jabatan $jabatan)
-    {
-        $jabatan->delete();
-        return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil dihapus.');
+public function destroy(Jabatan $jabatan)
+{
+    $jabatan->loadCount('karyawan');
+
+    if ($jabatan->karyawan_count > 0) {
+        return redirect()->back()->with('error', 'Jabatan tidak bisa dihapus karena masih digunakan oleh karyawan.');
     }
+
+    $jabatan->delete();
+    return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil dihapus.');
+}
+
 }
